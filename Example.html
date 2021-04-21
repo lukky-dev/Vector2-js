@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,html{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas">
+    </canvas>
+    <script src="vector2.js"></script>
+    <script>
+        //Canvas setup
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        ctx.translate(window.innerWidth/2, window.innerHeight/2);
+
+
+        var testVector = new Vector2(Math.floor(Math.random()*400)-200,Math.floor(Math.random()*400)-200);
+
+        function start(){
+
+            drawGrid(50);
+            
+            // drawing circle
+            
+            /*
+            var lastVector = new Vector2(10,0);
+            var postion = new Vector2(-5,-115);
+
+            for(var i = 0;i<100;i++){
+                var v2 = lastVector;
+                
+                v2.draw(ctx,"#f00",postion);
+                //Vector2.draw(ctx,"#0f0",v2.left,postion)
+
+                postion.x += v2.x;
+                postion.y += v2.y;
+                v2.rotate(5);        
+
+                lastVector = v2;
+            }
+            */
+            
+            // testVector showing normalize multiply and right left and back vector
+            
+            ctx.lineWidth = 5;
+            testVector.draw(ctx,"#bbb");
+            ctx.lineWidth = 1;
+
+            testVector.normalize();
+
+            testVector.multiply({x:100,y:100});
+            testVector.draw(ctx,"#00f");
+            Vector2.draw(ctx,"#0ff",testVector.left);//left
+            Vector2.draw(ctx,"#f0f",testVector.right);//right
+            Vector2.draw(ctx,"#ff0",testVector.backwards);//back
+
+        }
+
+        //function for drawing grid with axis
+        function drawGrid(size){
+            
+            ctx.strokeStyle = "#eee";
+
+            var height = Math.ceil(window.innerHeight/size);
+            var width = Math.ceil(window.innerWidth/size);
+            
+            for(var y = 0;y< height;y++){
+                for(var x = 0;x<width;x++){
+                    var trueX = x - Math.floor(width/2);
+                    var trueY = y - Math.floor(height/2);
+                    ctx.strokeRect(trueX*size,trueY*size,size,size);
+                }
+            }
+
+            ctx.fillStyle = "#333";
+            ctx.fillRect(-2,-2,4,4);
+
+            ctx.fillStyle = "#e77";
+            ctx.fillRect(-window.innerWidth/2,-1,window.innerWidth,1);
+
+            ctx.fillStyle = "#7e7";
+            ctx.fillRect(-1,-window.innerHeight/2,1,window.innerHeight);
+        
+        }
+
+        start();        
+    </script>
+</body>
+</html>
