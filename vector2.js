@@ -8,6 +8,9 @@ class Vector2{
     }
 
     normalize(){
+        if(this.x == 0 && this.y == 0){
+            return;
+        }
         var length = Math.sqrt((this.x*this.x)+(this.y*this.y));
         this.x = this.x/length;
         this.y = this.y/length;
@@ -43,11 +46,15 @@ class Vector2{
     }
 
     static normalize(vec2){
-        if(vec2){
-            var length = Math.sqrt((this.x*this.x)+(this.y*this.y));
-            return new Vector2(this.x/length,this.x/length)
+        
+        if(vec2.x == 0 && vec2.y == 0){
+            return new Vector2(0,0);
         }
-        return null;
+        if(vec2){
+            var length = Math.sqrt((vec2.x*vec2.x)+(vec2.y*vec2.y));
+            return new Vector2(vec2.x/length,vec2.y/length);
+        }
+        return new Vector2(0,0);
     }
 
     static multiply(vec2a,vec2b){
